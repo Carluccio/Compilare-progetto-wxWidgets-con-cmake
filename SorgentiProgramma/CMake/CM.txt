@@ -7,10 +7,10 @@ SET PATH1=%PATH%
 SET WX1=D:\wxWidgets-3.1.x
 SET SQ1=n
 SET VERS=31
-SET CP32=D:\mingw64\bin
-SET CP64=D:\mingw64\bin
+SET CP32=C:\mingw64\bin
+SET CP64=C:\mingw64\bin
 @echo ---Directory eseguibile ---vuoto: corrente---------
-SET DIRECTORY=D:\Eseguibili\CMake\HelloWord
+SET DIRECTORY=C:\Eseguibili\CMake\Programma
 @echo ---------------------------------------------------
 SET PRO=Programma
 SET SORG1=../Programma.cpp
