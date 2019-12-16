@@ -1,1 +1,1 @@
-Rinominare CM.txt in CM.cmd
+Rinominare CM.txt in CM.cmd, non toccare CMakeList.txt
