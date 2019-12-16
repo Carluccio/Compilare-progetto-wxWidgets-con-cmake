@@ -1,0 +1,277 @@
+@echo off
+TITLE COMPILAZIONE
+COLOR 1F
+MODE CON COLS=132 LINES=30
+SET PATH1=%PATH%
+@echo ---SQ o CP32 o CP64 =n se non installato ----------
+SET WX1=D:\wxWidgets-3.1.x
+SET SQ1=n
+SET VERS=31
+SET CP32=D:\mingw64\bin
+SET CP64=D:\mingw64\bin
+@echo ---Directory eseguibile ---vuoto: corrente---------
+SET DIRECTORY=D:\Eseguibili\CMake\HelloWord
+@echo ---------------------------------------------------
+SET PRO=Programma
+SET SORG1=../Programma.cpp
+SET SORG2=
+SET SORG3=
+SET SORG4=
+SET SORG5=
+SET SORG6=
+SET RESU=../Programma.rc
+@echo ---------------------------------------------------
+@echo on
+:MENU
+COLOR 1F
+SET INPUT=7
+TITLE COMPILAZIONE CMAKE
+CLS
+@echo.
+@echo ---------------------------------------------------------------------------
+@echo     Carlo Sala v: 2.0.1   ---        Compilazione con Cmake        ---   
+@echo ---------------------------------------------------------------------------
+@echo.                                                                            
+@echo  1) Architettura 32 dinamica release   5) Architettura 64 dinamica release 
+@echo.                                                                            
+@echo  2) Architettura 32 dinamica debug     6) Architettura 64 dinamica debug   
+@echo.                                                                            
+@echo ...........................................................................
+@echo.                                                                            
+@echo  3) Architettura 32 statica release    7) Architettura 64 statica release  
+@echo.                                                                            
+@echo  4) Architettura 32 statica debug      8) Architettura 64 statica debug    
+@echo.
+@echo ---------------------------------------------------------------------------
+@echo.
+@echo off
+SET /P INPUT= SCELTA OPPURE "0" ESCI :  
+CLS
+if %INPUT% == 0 EXIT
+
+if %INPUT% == 1 SET CAR=bin_32dll
+if %INPUT% == 1 SET S=dll
+if %INPUT% == 1 SET M=
+if %INPUT% == 1 SET R=
+if %INPUT% == 1 SET Z=-DHAVE_W32API_H -D__WXMSW__ -DNDEBUG -D_UNICODE -DWXUSINGDLL
+if %INPUT% == 1 SET Y=-O3 -Wall -Wl,--subsystem,windows  -std=c++11 -m32
+if %INPUT% == 1 SET J=-s -mwindows -m32
+if %INPUT% == 1 SET CAR=%DIRECTORY%\%CAR%
+if %INPUT% == 1 goto 32A
+
+if %INPUT% == 2 SET CAR=bin_32dll_d
+if %INPUT% == 2 SET S=dll
+if %INPUT% == 2 SET M=d
+if %INPUT% == 2 SET R=
+if %INPUT% == 2 SET Z=-DHAVE_W32API_H -D__WXMSW__ -D__WXDEBUG__ -D_UNICODE
+if %INPUT% == 2 SET Y=-g -O0 -Wall -std=c++11 -m32
+if %INPUT% == 2 SET J=-mwindows -m32
+if %INPUT% == 2 SET CAR=%DIRECTORY%\%CAR%
+if %INPUT% == 2 goto 32D
+
+if %INPUT% == 3 SET CAR=bin_32lib
+if %INPUT% == 3 SET S=lib
+if %INPUT% == 3 SET M=
+if %INPUT% == 3 SET R=
+if %INPUT% == 3 SET Z=-DHAVE_W32API_H -D__WXMSW__ -DNDEBUG -D_UNICODE 
+if %INPUT% == 3 SET Y=-O3 -Wall -Wl,--subsystem,windows -std=c++11 -m32
+if %INPUT% == 3 SET J =-s -mwindows -m32 -static
+if %INPUT% == 3 SET CAR=%DIRECTORY%\%CAR%
+if %INPUT% == 3 goto 32B
+
+if %INPUT% == 4 SET CAR=bin_32lib_d
+if %INPUT% == 4 SET S=lib
+if %INPUT% == 4 SET M=d
+if %INPUT% == 4 SET R=
+if %INPUT% == 4 SET Z=-DHAVE_W32API_H -D__WXMSW__ -D__WXDEBUG__ -D_UNICODE
+if %INPUT% == 4 SET Y=-g -O0 -Wall -std=c++11 -m32
+if %INPUT% == 4 SET J=-mwindows -m32 -static
+if %INPUT% == 4 SET CAR=%DIRECTORY%\%CAR%
+if %INPUT% == 4 goto 32C
+
+if %INPUT% == 5 SET CAR=bin_64dll
+if %INPUT% == 5 SET S=x64
+if %INPUT% == 5 SET M=
+if %INPUT% == 5 SET R=_dll
+if %INPUT% == 5 SET Z=-DHAVE_W32API_H -D__WXMSW__ -DNDEBUG -D_UNICODE -DWXUSINGDLL
+if %INPUT% == 5 SET Y=-O3 -Wall -Wl,--subsystem,windows -std=c++11
+if %INPUT% == 5 SET J=-s -mwindows
+if %INPUT% == 5 SET CAR=%DIRECTORY%\%CAR%
+if %INPUT% == 5 goto 64A
+ 
+if %INPUT% == 6 SET CAR=bin_64dll_d
+if %INPUT% == 6 SET S=x64
+if %INPUT% == 6 SET M=d
+if %INPUT% == 6 SET R=_dll
+if %INPUT% == 6 SET Z=-DHAVE_W32API_H -D__WXMSW__ -D__WXDEBUG__ -D_UNICODE
+if %INPUT% == 6 SET Y=-g -O0 -Wall -std=c++11
+if %INPUT% == 6 SET J=-mwindows
+if %INPUT% == 6 SET CAR=%DIRECTORY%\%CAR%
+if %INPUT% == 6 goto 64D
+ 
+if %INPUT% == 7 SET CAR=bin_64lib
+if %INPUT% == 7 SET S=x64
+if %INPUT% == 7 SET M=
+if %INPUT% == 7 SET R=_lib
+if %INPUT% == 7 SET Z=-DHAVE_W32API_H -D__WXMSW__ -DNDEBUG -D_UNICODE
+if %INPUT% == 7 SET Y=-O3 -Wall -Wl,--subsystem,windows -std=c++11
+if %INPUT% == 7 SET J=-s -mwindows -static
+if %INPUT% == 7 SET CAR=%DIRECTORY%\%CAR%
+if %INPUT% == 7 goto 64B
+ 
+if %INPUT% == 8 SET CAR=bin_64lib_d
+if %INPUT% == 8 SET S=x64
+if %INPUT% == 8 SET M=d
+if %INPUT% == 8 SET R=_lib
+if %INPUT% == 8 SET Z=-DHAVE_W32API_H -D__WXMSW__ -D__WXDEBUG__ -D_UNICODE
+if %INPUT% == 8 SET Y=-g -O0 -Wall -std=c++11
+if %INPUT% == 8 SET J=-mwindows -static
+if %INPUT% == 8 SET CAR=%DIRECTORY%\%CAR%
+if %INPUT% == 8 goto 64C
+goto MENU
+:32A
+if %CP32% == n GOTO MENU
+TITLE COMPILAZIONE CMAKE Architettura 32 dinamica release
+IF EXIST comp (
+@echo Cancello la cartella:
+RD /S comp )
+cls
+@echo ATTENDI!
+set PATH=%CP32%;%PATH1%
+cmake -G "MinGW Makefiles" -B comp -DS:STRING="%S%" -DM:STRING="%M%" -DR:STRING="%R%" -DZ:STRING="%Z%" -DY:STRING="%Y%" -DJ:STRING="%J%" -DWX1:STRING="%WX1%" -DSQ1:STRING="%SQ1%" -DCAR:STRING="%CAR%" -DVERS:STRING="%VERS%" -DPRO:STRING="%PRO%" -DSORG1:STRING="%SORG1%" -DSORG2:STRING="%SORG2%" -DSORG3:STRING="%SORG3%" -DSORG4:STRING="%SORG4%" -DSORG5:STRING="%SORG5%" -DSORG6:STRING="%SORG6%" -DRESU:STRING="%RESU%"
+ECHO on
+cd comp
+mingw32-make -j 4 -e -f Makefile
+@echo off
+goto FINE
+:32B
+if %CP32% == n GOTO MENU
+TITLE COMPILAZIONE CMAKE Architettura 32 statica release
+IF EXIST comp (
+@echo Cancello la cartella:
+RD /S comp )
+cls
+@echo ATTENDI!
+set PATH=%CP32%;%PATH1%
+cmake -G "MinGW Makefiles" -B comp -DS:STRING="%S%" -DM:STRING="%M%" -DR:STRING="%R%" -DZ:STRING="%Z%" -DY:STRING="%Y%" -DJ:STRING="%J%" -DWX1:STRING="%WX1%" -DSQ1:STRING="%SQ1%" -DCAR:STRING="%CAR%" -DVERS:STRING="%VERS%" -DPRO:STRING="%PRO%" -DSORG1:STRING="%SORG1%" -DSORG2:STRING="%SORG2%" -DSORG3:STRING="%SORG3%" -DSORG4:STRING="%SORG4%" -DSORG5:STRING="%SORG5%" -DSORG6:STRING="%SORG6%" -DRESU:STRING="%RESU%"
+ECHO on
+cd comp
+mingw32-make -j 4 -e -f Makefile
+@echo off
+goto FINE
+:32C
+if %CP32% == n GOTO MENU
+TITLE COMPILAZIONE CMAKE Architettura 32 statica debug
+IF EXIST comp (
+@echo Cancello la cartella:
+RD /S comp )
+cls
+@echo ATTENDI!
+set PATH=%CP32%;%PATH1%
+cmake -G "MinGW Makefiles" -B comp -DS:STRING="%S%" -DM:STRING="%M%" -DR:STRING="%R%" -DZ:STRING="%Z%" -DY:STRING="%Y%" -DJ:STRING="%J%" -DWX1:STRING="%WX1%" -DSQ1:STRING="%SQ1%" -DCAR:STRING="%CAR%" -DVERS:STRING="%VERS%" -DPRO:STRING="%PRO%" -DSORG1:STRING="%SORG1%" -DSORG2:STRING="%SORG2%" -DSORG3:STRING="%SORG3%" -DSORG4:STRING="%SORG4%" -DSORG5:STRING="%SORG5%" -DSORG6:STRING="%SORG6%" -DRESU:STRING="%RESU%"
+ECHO on
+cd comp
+mingw32-make -j 4 -e -f Makefile
+@echo off
+goto FINE
+:64A
+if %CP64% == n GOTO MENU
+TITLE COMPILAZIONE CMAKE Architettura 64 dinamica release
+IF EXIST comp (
+@echo Cancello la cartella:
+RD /S comp )
+cls
+@echo ATTENDI!
+set PATH=%CP64%;%PATH1%
+cmake -G "MinGW Makefiles" -B comp -DS:STRING="%S%" -DM:STRING="%M%" -DR:STRING="%R%" -DZ:STRING="%Z%" -DY:STRING="%Y%" -DJ:STRING="%J%" -DWX1:STRING="%WX1%" -DSQ1:STRING="%SQ1%" -DCAR:STRING="%CAR%" -DVERS:STRING="%VERS%" -DPRO:STRING="%PRO%" -DSORG1:STRING="%SORG1%" -DSORG2:STRING="%SORG2%" -DSORG3:STRING="%SORG3%" -DSORG4:STRING="%SORG4%" -DSORG5:STRING="%SORG5%" -DSORG6:STRING="%SORG6%" -DRESU:STRING="%RESU%"
+ECHO on
+cd comp
+mingw32-make -j 4 -e -f Makefile
+@echo off
+goto FINE
+:64B
+if %CP64% == n GOTO MENU
+TITLE COMPILAZIONE CMAKE Architettura 64 statica release
+IF EXIST comp (
+@echo Cancello la cartella:
+RD /S comp )
+cls
+@echo ATTENDI!
+set PATH=%CP64%;%PATH1%
+cmake -G "MinGW Makefiles" -B comp -DS:STRING="%S%" -DM:STRING="%M%" -DR:STRING="%R%" -DZ:STRING="%Z%" -DY:STRING="%Y%" -DJ:STRING="%J%" -DWX1:STRING="%WX1%" -DSQ1:STRING="%SQ1%" -DCAR:STRING="%CAR%" -DVERS:STRING="%VERS%" -DPRO:STRING="%PRO%" -DSORG1:STRING="%SORG1%" -DSORG2:STRING="%SORG2%" -DSORG3:STRING="%SORG3%" -DSORG4:STRING="%SORG4%" -DSORG5:STRING="%SORG5%" -DSORG6:STRING="%SORG6%" -DRESU:STRING="%RESU%"
+ECHO on
+cd comp
+mingw32-make -j 4 -e -f Makefile
+@echo off
+goto FINE
+:64C
+if %CP64% == n GOTO MENU
+TITLE COMPILAZIONE CMAKE Architettura 64 statica debug
+IF EXIST comp (
+@echo Cancello la cartella:
+RD /S comp )
+cls
+@echo ATTENDI!
+set PATH=%CP64%;%PATH1%
+cmake -G "MinGW Makefiles" -B comp -DS:STRING="%S%" -DM:STRING="%M%" -DR:STRING="%R%" -DZ:STRING="%Z%" -DY:STRING="%Y%" -DJ:STRING="%J%" -DWX1:STRING="%WX1%" -DSQ1:STRING="%SQ1%" -DCAR:STRING="%CAR%" -DVERS:STRING="%VERS%" -DPRO:STRING="%PRO%" -DSORG1:STRING="%SORG1%" -DSORG2:STRING="%SORG2%" -DSORG3:STRING="%SORG3%" -DSORG4:STRING="%SORG4%" -DSORG5:STRING="%SORG5%" -DSORG6:STRING="%SORG6%" -DRESU:STRING="%RESU%"
+ECHO on
+cd comp
+mingw32-make -j 4 -e -f Makefile
+@echo off
+goto FINE
+:32D
+if %CP32% == n GOTO MENU
+TITLE COMPILAZIONE CMAKE Architettura 32 dinamica debug
+IF EXIST comp (
+@echo Cancello la cartella:
+RD /S comp )
+cls
+@echo ATTENDI!
+set PATH=%CP32%;%PATH1%
+cmake -G "MinGW Makefiles" -B comp -DS:STRING="%S%" -DM:STRING="%M%" -DR:STRING="%R%" -DZ:STRING="%Z%" -DY:STRING="%Y%" -DJ:STRING="%J%" -DWX1:STRING="%WX1%" -DSQ1:STRING="%SQ1%" -DCAR:STRING="%CAR%" -DVERS:STRING="%VERS%" -DPRO:STRING="%PRO%" -DSORG1:STRING="%SORG1%" -DSORG2:STRING="%SORG2%" -DSORG3:STRING="%SORG3%" -DSORG4:STRING="%SORG4%" -DSORG5:STRING="%SORG5%" -DSORG6:STRING="%SORG6%" -DRESU:STRING="%RESU%"
+ECHO on
+cd comp
+mingw32-make -j 4 -e -f Makefile
+@echo off
+goto FINE
+:64D
+if %CP64% == n GOTO MENU
+TITLE COMPILAZIONE CMAKE Architettura 64 dinamica debug
+IF EXIST comp (
+@echo Cancello la cartella:
+RD /S comp )
+cls
+@echo ATTENDI!
+set PATH=%CP64%;%PATH1%
+cmake -G "MinGW Makefiles" -B comp -DS:STRING="%S%" -DM:STRING="%M%" -DR:STRING="%R%" -DZ:STRING="%Z%" -DY:STRING="%Y%" -DJ:STRING="%J%" -DWX1:STRING="%WX1%" -DSQ1:STRING="%SQ1%" -DCAR:STRING="%CAR%" -DVERS:STRING="%VERS%" -DPRO:STRING="%PRO%" -DSORG1:STRING="%SORG1%" -DSORG2:STRING="%SORG2%" -DSORG3:STRING="%SORG3%" -DSORG4:STRING="%SORG4%" -DSORG5:STRING="%SORG5%" -DSORG6:STRING="%SORG6%" -DRESU:STRING="%RESU%"
+ECHO on
+cd comp
+mingw32-make -j 4 -e -f Makefile
+@echo off
+goto FINE
+
+:ERR
+@echo *
+@echo PARAMETRI NON VALIDI ...
+@echo *
+goto ESCI
+:FINE
+cd ..\
+@echo.
+@echo.
+@echo ---------------------------------------------------------------------------
+@echo   FINE COMPILAZIONE ...
+@echo ---------------------------------------------------------------------------
+@echo.
+@echo.
+:ESCI
+SET INPUT=7
+SET /P INPUT= PREMI UN TASTO PER CONTINUARE o "2" per avviare l'eseguibile ...:  
+CLS
+@for %%f in ("CM.cmd") DO @SET currDir_=%%~df%%~pf
+if %INPUT% == 2 CD /d %CAR%
+if %INPUT% == 2 start %PRO%.exe
+if %INPUT% == 2 CD /d %currDir_%
+SET CAR
+SET PRO
+GOTO MENU
