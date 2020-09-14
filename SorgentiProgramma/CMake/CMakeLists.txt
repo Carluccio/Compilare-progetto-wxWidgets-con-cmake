@@ -16,7 +16,7 @@ ELSE(${SQ1} MATCHES "n")
 include_directories(${SQ1}/include)
 set(pathSq "-L${SQ1}/lib/gcc_${S}${R}")  # linker library wxWidgets non inserire C:/
 set(LIBRARIES_SQ
-sqlite3u${M}
+#sqlite3u${M}
 wxsqlite3_msw${VERS}u${M}
 )
 ENDIF(${SQ1} MATCHES "n")
