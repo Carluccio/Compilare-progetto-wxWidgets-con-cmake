@@ -6,7 +6,7 @@ SET PATH1=%PATH%
 @echo ---SQ o CP32 o CP64 =n se non installato ----------
 SET WX1=D:\wxWidgets-3.1.x
 SET SQ1=n
-SET VERS=31
+SET VERS=32
 SET CP32=C:\mingw64\bin
 SET CP64=C:\mingw64\bin
 @echo ---Directory eseguibile ---vuoto: corrente---------
