@@ -7,8 +7,8 @@ SET PATH1=%PATH%
 SET WX1=D:\wxWidgets-3.1.x
 SET SQ1=n
 SET VERS=32
-SET CP32=C:\mingw64\bin
-SET CP64=C:\mingw64\bin
+SET CP32=esempio:   C:\mingw64\bin
+SET CP64=esempio:   C:\mingw64\bin
 @echo ---Directory eseguibile ---vuoto: corrente---------
 SET DIRECTORY=C:\Eseguibili\CMake\Programma
 @echo ---------------------------------------------------
